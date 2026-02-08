@@ -5,13 +5,21 @@ import Image from "next/image";
 import { cn, formatCurrency } from "@/lib/utils";
 import { TrendingUp, TrendingDown } from "lucide-react";
 import DataTable from "../DataTable";
+import { TrendingCoinsFallback } from "./fallback";
 
 const TrendingCoin = async () => {
-  const trendingCoins = await fetcher<{ coins: TrendingCoin[] }>(
-    "/search/trending",
-    undefined,
-    300,
-  );
+  let trendingCoins: { coins: TrendingCoin[] };
+  try {
+    trendingCoins = await fetcher<{ coins: TrendingCoin[] }>(
+      "/search/trending",
+      undefined,
+      300,
+    );
+  } catch (err) {
+    // Log for debugging; consider reporting to telemetry (e.g. Sentry)
+    console.error("[TrendingCoin] Failed to fetch trending coins:", err);
+    return <TrendingCoinsFallback />;
+  }
 
   const columns: DataTableColumn<TrendingCoin>[] = [
     {
