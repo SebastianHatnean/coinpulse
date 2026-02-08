@@ -28,10 +28,10 @@ export async function fetcher<T>(
     });
 
     if (!response.ok) {
-        const errorBody: CoinGeckoErrorBody = await response.json().catch(() => ({ error: 'Failed to fetch data' }));
-        throw new Error(`API ERROR: ${response.status} ${response.statusText} - ${errorBody.error}`);
-    }
+        const errorBody: CoinGeckoErrorBody = await response.json().catch(() => ({}));
+        throw new Error(`API Error: ${response.status}: ${errorBody.error || response.statusText} `);
+      }
 
-    return response.json() as Promise<T>;
+    return response.json();
 }
 
