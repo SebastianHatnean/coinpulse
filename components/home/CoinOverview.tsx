@@ -4,6 +4,7 @@ import Image from "next/image";
 import { formatCurrency } from "@/lib/utils";
 import { CoinOverviewFallback } from "./fallback";
 import CandleStickChart from "@/components/CandleStickChart";
+import LivePrice from "./LivePrice";
 
 const CoinOverview = async () => {
   try {

@@ -140,6 +140,8 @@ interface Trade {
   type?: string;
   amount?: number;
   value?: number;
+  side?: string;
+  quantity?: number;
 }
 
 interface ExtendedPriceData {
