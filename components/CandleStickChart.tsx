@@ -33,6 +33,7 @@ const CandleStickChart = ({
   const [isPending, startTransition] = useTransition();
 
   const fetchOhlcData = async (selectedPeriod: Period) => {
+    setLoading(true);
     try {
       const { days, interval } = PERIOD_CONFIG[selectedPeriod];
 
@@ -48,6 +49,8 @@ const CandleStickChart = ({
       });
     } catch (error) {
       console.error("Error fetching OHLC data:", error);
+    } finally {
+      setLoading(false);
     }
   };
 

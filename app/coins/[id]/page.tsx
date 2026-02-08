@@ -40,19 +40,19 @@ const page = async ({ params }: NextPageProps) => {
     {
       label: "Website",
       value: "-",
-      link: coinData.links.homepage[0],
+      link: coinData.links.homepage[0] || null,
       linkText: "Visit Website",
     },
     {
       label: "Explorer",
       value: "-",
-      link: coinData.links.blockchain_site[0],
+      link: coinData.links.blockchain_site[0] || null,
       linkText: "Visit Explorer",
     },
     {
       label: "Community",
       value: "-",
-      link: coinData.links.subreddit_url,
+      link: coinData.links.subreddit_url || null,
       linkText: "Visit Community",
     },
   ];
