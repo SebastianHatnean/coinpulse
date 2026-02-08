@@ -54,6 +54,13 @@ const trendingFallbackColumns: DataTableColumn<SkeletonRow>[] = [
   },
 ];
 
+/**
+ * Render a skeleton "Trending Coins" section.
+ *
+ * Displays a heading and a DataTable populated with placeholder rows and skeleton cells to indicate loading state.
+ *
+ * @returns A React element containing the "Trending Coins" skeleton table.
+ */
 export function TrendingCoinsFallback() {
   return (
     <div id="trending-coins-fallback">
