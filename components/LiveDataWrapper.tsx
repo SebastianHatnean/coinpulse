@@ -5,12 +5,21 @@ import CandleStickChart from "./CandleStickChart";
 import { useCoinGeckoWebSocket } from "@/hooks/useCoinGeckoWebSocket";
 import DataTable from "@/components/DataTable";
 import { formatCurrency, timeAgo } from "@/lib/utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CoinHeader from "@/components/CoinHeader";
 
 const LiveDataWrapper = ({ children, coinId, poolId, coin, coinOHLCData }: LiveDataProps) => {
   const [liveInterval, setLiveInterval] = useState<"1s" | "1m">("1s");
+  const [hasMounted, setHasMounted] = useState(false);
   const { trades, ohlcv, price } = useCoinGeckoWebSocket({ coinId, poolId, liveInterval });
+
+  useEffect(() => setHasMounted(true), []);
+
+  // Use server price until after hydration so server and client first paint match
+  const displayPrice = hasMounted ? (price?.usd ?? coin.market_data.current_price.usd) : coin.market_data.current_price.usd;
+  const displayChange24h = hasMounted
+    ? (price?.change24h ?? coin.market_data.price_change_percentage_24h_in_currency.usd)
+    : coin.market_data.price_change_percentage_24h_in_currency.usd;
 
   const tradeColumns: DataTableColumn<Trade>[] = [
     {
@@ -49,10 +58,8 @@ const LiveDataWrapper = ({ children, coinId, poolId, coin, coinOHLCData }: LiveD
       <CoinHeader
         name={coin.name}
         image={coin.image.large}
-        livePrice={price?.usd ?? coin.market_data.current_price.usd}
-        livePriceChangePercentage24h={
-          price?.change24h ?? coin.market_data.price_change_percentage_24h_in_currency.usd
-        }
+        livePrice={displayPrice}
+        livePriceChangePercentage24h={displayChange24h}
         priceChangePercentage30d={coin.market_data.price_change_percentage_30d_in_currency.usd}
         priceChange24h={coin.market_data.price_change_24h_in_currency.usd}
       />
