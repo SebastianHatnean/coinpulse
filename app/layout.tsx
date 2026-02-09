@@ -24,9 +24,17 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const trendingData = await fetcher<{ coins: TrendingCoin[] }>("/search/trending", undefined, 300);
-
-  const trendingCoins = trendingData.coins;
+  let trendingCoins: TrendingCoin[] = [];
+  try {
+    const trendingData = await fetcher<{ coins: TrendingCoin[] }>(
+      "/search/trending",
+      undefined,
+      300
+    );
+    trendingCoins = trendingData.coins ?? [];
+  } catch (error) {
+    console.error("Failed to fetch trending coins:", error);
+  }
   return (
     <html lang="en" className="dark">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
