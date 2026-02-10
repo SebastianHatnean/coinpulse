@@ -41,7 +41,6 @@ const CandleStickChart = ({
         vs_currency: "usd",
         days,
         precision: "full",
-        interval,
       });
 
       startTransition(() => {
