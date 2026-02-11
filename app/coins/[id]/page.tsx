@@ -1,6 +1,8 @@
 import Converter from "@/components/Converter";
 import LiveDataWrapper from "@/components/LiveDataWrapper";
+import News from "@/components/News";
 import { fetcher, getPools } from "@/lib/quingecko.actions";
+import { getNews } from "@/lib/news.actions";
 import { formatCurrency } from "@/lib/utils";
 import { ArrowUpRightIcon } from "lucide-react";
 import Link from "next/link";
@@ -18,6 +20,9 @@ const page = async ({ params }: NextPageProps) => {
       precision: "full",
     }),
   ]);
+
+  const news = await getNews(coinData.name);
+
   const platform = coinData.asset_platform_id
     ? coinData.detail_platforms?.[coinData.asset_platform_id]
     : null;
@@ -100,7 +105,7 @@ const page = async ({ params }: NextPageProps) => {
             ))}
           </ul>
         </div>
-        <p> Top Gainers & Losers</p>
+        <News articles={news} coinName={coinData.name} />
       </section>
     </main>
   );

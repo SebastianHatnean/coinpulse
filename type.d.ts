@@ -312,9 +312,114 @@ interface CoinGeckoErrorBody {
 
 type QueryParams = Record<string, string | number | boolean | undefined>;
 
+
+
+
+
+
+
 interface PoolData {
+
+
+
   id: string;
+
+
+
   address: string;
+
+
+
   name: string;
+
+
+
   network: string;
+
+
+
 }
+
+
+
+
+
+
+
+interface NewsArticle {
+
+
+
+  source: {
+
+
+
+    id: string | null;
+
+
+
+    name: string;
+
+
+
+  };
+
+
+
+  author: string | null;
+
+
+
+  title: string;
+
+
+
+  description: string | null;
+
+
+
+  url: string;
+
+
+
+  urlToImage: string | null;
+
+
+
+  publishedAt: string;
+
+
+
+  content: string | null;
+
+
+
+}
+
+
+
+
+
+
+
+interface NewsAPIResponse {
+
+
+
+  status: string;
+
+
+
+  totalResults: number;
+
+
+
+  articles: NewsArticle[];
+
+
+
+}
+
+
+
+
